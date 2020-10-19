@@ -1,0 +1,31 @@
+@import '../../styles/colors.scss';
+
+.app {
+  position: relative;
+}
+
+.menu-wrapper {
+  background: $bg;
+  height: 25vh;
+  position: absolute;
+  z-index: 900;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  border-radius: 0 0 35px 35px;
+  display: flex;
+  justify-content: center;
+  opacity: .75;
+
+  $size: 50px;
+
+  .pos-btn {
+    width: $size;
+    height: $size;
+    background: $primary;
+    border-radius: 50%;
+    margin-top: -$size/2;
+    box-shadow: 0 0 16px 10px rgba(0,0,0, 0.1), 0 0 6px -2px rgba(0,0,0, 0.3);
+    cursor: pointer;
+  }
+}
