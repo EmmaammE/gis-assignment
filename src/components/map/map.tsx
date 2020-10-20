@@ -1,7 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import L from 'leaflet';
 import './map.scss';
 import { Marker } from './type';
+
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+})
 
 export interface MapOptions {
   center: number[],
@@ -10,9 +18,17 @@ export interface MapOptions {
   url: string,
   attribution: string,
   markersData: Marker[] | null,
+  ref: any,
 }
 
-function Map({center, zoom, url, attribution, markersData}: MapOptions) {
+const Map = forwardRef(({center, zoom, url, attribution, markersData}: MapOptions, ref: any) => {
+  useImperativeHandle(
+    ref,
+    () => ({
+      fitBounds: fitBounds
+    })
+  )
+
   let mapRef = useRef<any>(null);
 
   // init map
@@ -34,21 +50,29 @@ function Map({center, zoom, url, attribution, markersData}: MapOptions) {
   // add layer
   const layerRef = React.useRef<any>(null);
   useEffect(() => {
-    layerRef.current = L.layerGroup().addTo(mapRef.current);
+    layerRef.current = L.featureGroup().addTo(mapRef.current);
   }, []);
 
   // update markers
   useEffect(() => {
-    layerRef.current.clearLayers();
-    markersData !== null && markersData.forEach(marker => {
-      L.marker(L.latLng(marker.point[0],marker.point[1]), {title: marker.title || ''})
-        .addTo(layerRef.current);
-    })
-  }, [markersData])
+    // layerRef.current.clearLayers();
+    if(markersData !== null) {
+      const $markers = markersData.map(marker => {
+        return L.marker(L.latLng(marker.point[0],marker.point[1]), {title: marker.title || ''})
+      })
+      layerRef.current = L.featureGroup($markers).addTo(mapRef.current);
+      fitBounds();
+    }
+  }, [markersData]);
 
+  const fitBounds = () => {
+    mapRef.current.fitBounds(layerRef.current.getBounds(), {
+      maxZoom: 16
+    });
+  }
   return (
     <div id="map" ref={mapRef}></div>
   )
-}
+})
 
 export default Map;

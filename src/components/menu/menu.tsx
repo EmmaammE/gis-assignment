@@ -1,11 +1,19 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import './menu.scss'
+import './menu.scss';
 
-function Menu() {
+interface MenuProps {
+  setFit: Function,
+}
+
+function Menu({setFit}: MenuProps) {
+
+  const clickFitBtn = () => {
+    setFit(true)
+  }
+
   return (
     <div className="menu-wrapper">
-      <div className="pos-btn"></div>
+      <div className="pos-btn" onClick={clickFitBtn}></div>
     </div>
   )
 }

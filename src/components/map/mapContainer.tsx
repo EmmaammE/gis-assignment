@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import L from 'leaflet';
+import React, { useEffect, useState, useRef } from 'react';
 import { ATTRIBUTION, URL } from '../../util/map';
 import Map from './map';
 import { Marker } from './type';
 
-function MapContainer() {
+interface MapProps {
+  fit: boolean,
+  setFit: Function,
+}
+
+function MapContainer({fit, setFit}: MapProps) {
   const [center, setCenter] = useState([29.896136, 121.644553]);
   const [zoom, setZoom] = useState(15);
   const [markers, setMarkers] = useState<Marker[] | null>(null);
+
+  // mapref
+  const $map = useRef<any>(null);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -34,8 +41,17 @@ function MapContainer() {
     setMarkers(arr);
   }
 
+  // invoke fit function from child compoent
+  useEffect(() => {
+    if(fit) {
+      $map.current.fitBounds();
+      setFit(false);
+    }
+  }, [fit])
+
   return (
-    <Map 
+    <Map
+      ref={$map} 
       center={center} 
       zoom={zoom}
       url={URL}
