@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "//gis-assignment/static/css/main.f4492306.chunk.css",
-    "main.js": "//gis-assignment/static/js/main.916f751b.chunk.js",
-    "main.js.map": "//gis-assignment/static/js/main.916f751b.chunk.js.map",
-    "runtime-main.js": "//gis-assignment/static/js/runtime-main.44393bf2.js",
-    "runtime-main.js.map": "//gis-assignment/static/js/runtime-main.44393bf2.js.map",
-    "static/css/2.46b01f9c.chunk.css": "//gis-assignment/static/css/2.46b01f9c.chunk.css",
-    "static/js/2.58479d0a.chunk.js": "//gis-assignment/static/js/2.58479d0a.chunk.js",
-    "static/js/2.58479d0a.chunk.js.map": "//gis-assignment/static/js/2.58479d0a.chunk.js.map",
-    "index.html": "//gis-assignment/index.html",
-    "precache-manifest.de1e12d4bcf46bee8f4bb2733a0d60e0.js": "//gis-assignment/precache-manifest.de1e12d4bcf46bee8f4bb2733a0d60e0.js",
-    "service-worker.js": "//gis-assignment/service-worker.js",
-    "static/css/2.46b01f9c.chunk.css.map": "//gis-assignment/static/css/2.46b01f9c.chunk.css.map",
-    "static/css/main.f4492306.chunk.css.map": "//gis-assignment/static/css/main.f4492306.chunk.css.map",
-    "static/js/2.58479d0a.chunk.js.LICENSE.txt": "//gis-assignment/static/js/2.58479d0a.chunk.js.LICENSE.txt"
+    "main.css": "/gis-assignment/static/css/main.f4492306.chunk.css",
+    "main.js": "/gis-assignment/static/js/main.fc644e32.chunk.js",
+    "main.js.map": "/gis-assignment/static/js/main.fc644e32.chunk.js.map",
+    "runtime-main.js": "/gis-assignment/static/js/runtime-main.2026ba76.js",
+    "runtime-main.js.map": "/gis-assignment/static/js/runtime-main.2026ba76.js.map",
+    "static/css/2.46b01f9c.chunk.css": "/gis-assignment/static/css/2.46b01f9c.chunk.css",
+    "static/js/2.58479d0a.chunk.js": "/gis-assignment/static/js/2.58479d0a.chunk.js",
+    "static/js/2.58479d0a.chunk.js.map": "/gis-assignment/static/js/2.58479d0a.chunk.js.map",
+    "index.html": "/gis-assignment/index.html",
+    "precache-manifest.99c1ff96dfeddd3d69008804947d1ab8.js": "/gis-assignment/precache-manifest.99c1ff96dfeddd3d69008804947d1ab8.js",
+    "service-worker.js": "/gis-assignment/service-worker.js",
+    "static/css/2.46b01f9c.chunk.css.map": "/gis-assignment/static/css/2.46b01f9c.chunk.css.map",
+    "static/css/main.f4492306.chunk.css.map": "/gis-assignment/static/css/main.f4492306.chunk.css.map",
+    "static/js/2.58479d0a.chunk.js.LICENSE.txt": "/gis-assignment/static/js/2.58479d0a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.44393bf2.js",
+    "static/js/runtime-main.2026ba76.js",
     "static/css/2.46b01f9c.chunk.css",
     "static/js/2.58479d0a.chunk.js",
     "static/css/main.f4492306.chunk.css",
-    "static/js/main.916f751b.chunk.js"
+    "static/js/main.fc644e32.chunk.js"
   ]
 }
