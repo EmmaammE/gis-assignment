@@ -8,7 +8,7 @@
   background: $bg;
   height: 25vh;
   position: absolute;
-  z-index: 900;
+  z-index: 1000;
   bottom: 4px;
   left: 4px;
   right: 4px;
@@ -25,7 +25,7 @@
     background: $primary;
     border-radius: 50%;
     margin-top: -$size/2;
-    box-shadow: 0 0 16px 10px rgba(0,0,0, 0.1), 0 0 6px -2px rgba(0,0,0, 0.3);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     cursor: pointer;
   }
 }
