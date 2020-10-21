@@ -24,7 +24,7 @@ function MapContainer({fit, setFit}: MapProps) {
       });
     } else {
       /* 地理位置服务不可用 */
-      alert('有问题');
+      console.log("地图服务不可用")
     }
   }, []);
 

@@ -1,7 +1,9 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import L from 'leaflet';
+import L, { LatLngBounds } from 'leaflet';
 import './map.scss';
 import { Marker } from './type';
+import icon from '../../styles/marker-icon-2x-gold.png'
+import wgs_gcj from '../../util/coord';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -11,6 +13,15 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 })
 
+const goldIcon = new L.Icon({
+  iconUrl: icon,
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 export interface MapOptions {
   center: number[],
   zoom: number,
@@ -18,7 +29,6 @@ export interface MapOptions {
   url: string,
   attribution: string,
   markersData: Marker[] | null,
-  ref: any,
 }
 
 const Map = forwardRef(({center, zoom, url, attribution, markersData}: MapOptions, ref: any) => {
@@ -58,17 +68,31 @@ const Map = forwardRef(({center, zoom, url, attribution, markersData}: MapOption
     // layerRef.current.clearLayers();
     if(markersData !== null) {
       const $markers = markersData.map(marker => {
-        return L.marker(L.latLng(marker.point[0],marker.point[1]), {title: marker.title || ''})
+        return L.marker(L.latLng(marker.point[0], marker.point[1]), {title: marker.title || ''});
       })
+
+      markersData.forEach(marker => {
+        const point: any = wgs_gcj({
+          lat: marker.point[0],
+          lon: marker.point[1]
+        })
+        $markers.push(
+          L.marker(L.latLng(point.lat, point.lon), {title: '转换后', icon: goldIcon})
+        )
+      })
+
       layerRef.current = L.featureGroup($markers).addTo(mapRef.current);
       fitBounds();
     }
   }, [markersData]);
 
   const fitBounds = () => {
-    mapRef.current.fitBounds(layerRef.current.getBounds(), {
-      maxZoom: 16
-    });
+    const bounds: LatLngBounds = layerRef.current.getBounds();
+    if(Object.keys(bounds).length > 0){
+      mapRef.current.fitBounds(bounds, {
+        maxZoom: 16
+      });
+    }
   }
   return (
     <div id="map" ref={mapRef}></div>
