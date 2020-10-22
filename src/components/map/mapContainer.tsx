@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ATTRIBUTION, URL } from '../../util/map';
+import AMap from './amap';
 import Map from './map';
 import { Marker } from './type';
 
 interface MapProps {
   fit: boolean,
   setFit: Function,
+  status: boolean,
 }
 
-function MapContainer({fit, setFit}: MapProps) {
+function MapContainer({fit, setFit, status}: MapProps) {
   const [center, setCenter] = useState([29.896136, 121.644553]);
   const [zoom, setZoom] = useState(15);
   const [markers, setMarkers] = useState<Marker[] | null>(null);
@@ -36,7 +38,8 @@ function MapContainer({fit, setFit}: MapProps) {
 
     let arr: Marker[] = [];
     arr.push({
-      point: [latitude, longitude]
+      lat: latitude,
+      lng: longitude,
     })
     setMarkers(arr);
   }
@@ -50,6 +53,11 @@ function MapContainer({fit, setFit}: MapProps) {
   }, [fit])
 
   return (
+    status ? 
+    <AMap 
+      center={center} 
+      zoom={zoom}
+    /> : 
     <Map
       ref={$map} 
       center={center} 

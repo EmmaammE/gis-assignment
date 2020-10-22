@@ -6,7 +6,14 @@ const ATTRIBUTION: string=  'Map data &copy; <a href="https://www.openstreetmap.
   + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
   + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
 
+// the center point of map
+const center: number[] = [29.896136, 121.644553];
+// the zoom level
+const zoom: number = 15;
+
 export {
   URL,
-  ATTRIBUTION
+  ATTRIBUTION,
+  center,
+  zoom
 }

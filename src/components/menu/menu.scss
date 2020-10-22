@@ -14,8 +14,9 @@
   right: 4px;
   border-radius: 0 0 35px 35px;
   display: flex;
-  justify-content: center;
-  opacity: .75;
+  flex-direction: column;
+  align-items: center;
+  opacity: .85;
 
   $size: 50px;
 
@@ -27,5 +28,12 @@
     margin-top: -$size/2;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     cursor: pointer;
+  }
+
+  .btn-container {
+    display: flex;
+    height: 20vh;
+    flex-direction: column;
+    justify-content: center;
   }
 }
