@@ -1,14 +1,11 @@
 // 异步加载高德地图api
 export function load() {
     return new Promise((resolve, reject) => {
-        
         if((window as any).AMap) {
-            console.log('cache: ', (window as any).AMap);
             return resolve((window as any).AMap);
         }
 
         (window as any).init = function() {
-            console.log('init: ', (window as any).AMap);
             resolve((window as any).AMap);
         }
 

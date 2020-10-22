@@ -3,7 +3,6 @@ import L, { LatLngBounds } from 'leaflet';
 import './map.scss';
 import { Marker } from './type';
 import icon from '../../styles/marker-icon-2x-gold.png'
-import wgs_gcj from '../../util/coord';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -67,18 +66,11 @@ const Map = forwardRef(({center, zoom, url, attribution, markersData}: MapOption
   useEffect(() => {
     // layerRef.current.clearLayers();
     if(markersData !== null) {
-      const $markers = markersData.map(marker => {
+      const $markers = markersData.map((marker, index) => {
+        if(index % 2 === 0) {
+          return L.marker(L.latLng(marker.lat, marker.lng), {title: marker.title || '', icon: goldIcon});
+        }
         return L.marker(L.latLng(marker.lat, marker.lng), {title: marker.title || ''});
-      })
-
-      markersData.forEach(marker => {
-        const point: any = wgs_gcj({
-          lat: marker.lat,
-          lon: marker.lng
-        })
-        $markers.push(
-          L.marker(L.latLng(point.lat, point.lon), {title: '转换后', icon: goldIcon})
-        )
       })
 
       layerRef.current = L.featureGroup($markers).addTo(mapRef.current);

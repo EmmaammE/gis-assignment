@@ -3,6 +3,8 @@ import { ATTRIBUTION, URL } from '../../util/map';
 import AMap from './amap';
 import Map from './map';
 import { Marker } from './type';
+import wgs_gcj from '../../util/coord';
+import { marker } from 'leaflet';
 
 interface MapProps {
   fit: boolean,
@@ -41,6 +43,17 @@ function MapContainer({fit, setFit, status}: MapProps) {
       lat: latitude,
       lng: longitude,
     })
+
+    const point: any = wgs_gcj({
+      lat: latitude,
+      lon: longitude
+    })
+    arr.push({
+      lat: point.lat,
+      lng: point.lon,
+      title: '转换后'
+    })
+
     setMarkers(arr);
   }
 
@@ -57,6 +70,7 @@ function MapContainer({fit, setFit, status}: MapProps) {
     <AMap 
       center={center} 
       zoom={zoom}
+      markersData={markers}
     /> : 
     <Map
       ref={$map} 
