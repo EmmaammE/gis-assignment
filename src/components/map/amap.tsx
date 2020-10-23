@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { load } from '../../util/loadAmap';
 import './map.scss';
 import { Marker } from './type';
-import png from '../../styles/marker-icon-2x-gold.png'
+import png from '../../styles/marker-icon-2x-gold.png';
+import green from '../../styles/marker-icon-green.png';
+import wgs_gcj from '../../util/coord';
 
 interface AMapProps {
   center: number[],
@@ -38,6 +40,26 @@ function AMap({center, zoom, markersData}: AMapProps) {
         })
       })    
       
+      // wsg——gcj
+      markersData && markersData.forEach(p => {
+        const point: any = wgs_gcj({
+          lat: p.lat,
+          lon: p.lng
+        })
+
+        // console.log(point)
+
+        markers && markers.push(
+          setLabel(
+            new (window as any).AMap.Marker({
+              position: new (window as any).AMap.LngLat(point.lon, point.lat),
+              title: 'wgs_gcj',
+              icon: green,
+            }), 'gcj'
+          )
+        )  
+      })
+
       markersData && Promise.all(markersData.map(point => {
         return new Promise((resolve, reject) => {
           (window as any).AMap.convertFrom([116.3, 39.9], 'gps', function(status: any, result: any){
@@ -54,11 +76,13 @@ function AMap({center, zoom, markersData}: AMapProps) {
       })).then(values => {
         values.forEach(value => {
           markers && markers.push(
-            new (window as any).AMap.Marker({
-              position: (value as any).locations,
-              title: '转换后',
-              icon: png,
-            })
+            setLabel(
+              new (window as any).AMap.Marker({
+                position: (value as any).locations,
+                title: '转换后',
+                icon: png,
+              }), '高德地图转换'
+            )
           )
         })
 
@@ -67,6 +91,13 @@ function AMap({center, zoom, markersData}: AMapProps) {
     }
   }, [markersData, map])
 
+  const setLabel = (marker: any, text: string) => {
+    marker.setLabel({
+        content: "<div class='info'>"+text+"</div", //设置文本标注内容
+        direction: 'bottom' //设置文本标注方位
+    });
+    return marker;
+  }
   return (
     <div id="container"></div>
   )

@@ -69,14 +69,14 @@ const Map = forwardRef(({center, zoom, url, attribution, markersData}: MapOption
     if(markersData !== null) {
       const $markers: any[] = [];
       markersData.forEach(marker => {
-        const point: any = wgs_gcj({
-          lat: marker.lat,
-          lon: marker.lng
-        })
+        // const point: any = wgs_gcj({
+        //   lat: marker.lat,
+        //   lon: marker.lng
+        // })
 
-        $markers.push(
-          L.marker(L.latLng(point.lat, point.lon), {title: '转换后', icon: goldIcon})
-        )
+        // $markers.push(
+        //   L.marker(L.latLng(point.lat, point.lon), {title: '转换后', icon: goldIcon})
+        // )
         $markers.push(
           L.marker(L.latLng(marker.lat, marker.lng), {title: marker.title || ''})
         )

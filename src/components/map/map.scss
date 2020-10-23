@@ -6,3 +6,12 @@
   height: 85vh;
   margin: 20px;
 }
+
+.amap-marker-label {
+  border-radius: .25rem;
+  box-shadow: 0 0 3px 0 rgba(114, 124, 245, .5);
+  background-color: white;
+  border: 0 solid #fff;
+  padding: 4px 10px;
+  opacity: .7;
+}

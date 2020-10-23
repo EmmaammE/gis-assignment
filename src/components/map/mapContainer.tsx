@@ -3,8 +3,6 @@ import { ATTRIBUTION, URL } from '../../util/map';
 import AMap from './amap';
 import Map from './map';
 import { Marker } from './type';
-import wgs_gcj from '../../util/coord';
-import { marker } from 'leaflet';
 
 interface MapProps {
   fit: boolean,
@@ -23,9 +21,15 @@ function MapContainer({fit, setFit, status}: MapProps) {
   useEffect(() => {
     if ("geolocation" in navigator) {
       /* 地理位置服务可用 */
-      navigator.geolocation.getCurrentPosition(function(position) {
-        handlePos(position);
-      });
+      let timer = setTimeout(() => {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          handlePos(position);
+        });
+      }, 2000);
+      
+      return () => {
+        clearTimeout(timer);
+      }
     } else {
       /* 地理位置服务不可用 */
       console.log("地图服务不可用")
@@ -35,8 +39,7 @@ function MapContainer({fit, setFit, status}: MapProps) {
   const handlePos = (position: any): void => {
     // 维度 经度
     const {latitude, longitude} = position.coords;
-    // todo 算法
-    console.log(latitude, longitude);
+    console.log('获得了地理位置', latitude, longitude);
 
     let arr: Marker[] = [];
     arr.push({
