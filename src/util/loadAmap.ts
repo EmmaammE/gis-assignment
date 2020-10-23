@@ -1,4 +1,5 @@
 // 异步加载高德地图api
+const key = "63cbf408d546f937970be999e38d6956";
 export function load() {
     return new Promise((resolve, reject) => {
         if((window as any).AMap) {
@@ -11,7 +12,7 @@ export function load() {
 
         let script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "//webapi.amap.com/maps?v=1.4.15&key=608d75903d29ad471362f8c58c550daf&callback=init";
+        script.src = "//webapi.amap.com/maps?v=1.4.15&key="+key +"&callback=init";
         script.onerror = reject;
         script.id="amap";
         document.head.appendChild(script);

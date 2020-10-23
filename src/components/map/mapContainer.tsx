@@ -43,17 +43,6 @@ function MapContainer({fit, setFit, status}: MapProps) {
       lat: latitude,
       lng: longitude,
     })
-
-    const point: any = wgs_gcj({
-      lat: latitude,
-      lon: longitude
-    })
-    arr.push({
-      lat: point.lat,
-      lng: point.lon,
-      title: '转换后'
-    })
-
     setMarkers(arr);
   }
 

@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { load } from '../../util/loadAmap';
 import './map.scss';
 import { Marker } from './type';
-import AMapLoader from '@amap/amap-jsapi-loader';
-import icon from '../../styles/marker-icon-2x-gold.png'
-
+import png from '../../styles/marker-icon-2x-gold.png'
 
 interface AMapProps {
   center: number[],
@@ -32,25 +30,40 @@ function AMap({center, zoom, markersData}: AMapProps) {
   useEffect(() => {
     if((window as any).AMap && map!== null) {
       // map.remove
-      const markers = markersData?.map((marker, index) => {
-        if((index % 2)===0) {
-          return new (window as any).AMap.Marker({
-            position: new (window as any).AMap.LngLat(marker.lng, marker.lat),
-            title: marker.title || '',
-            icon: icon,
-            // size: new AMap.Size(40, 50),    // 图标尺寸
-            // imageOffset: new AMap.Pixel(0, -60),  // 图像相对展示区域的偏移量，适于雪碧图等
-            // imageSize: new AMap.Size(40, 50)   // 根据所设置的大小拉伸或压缩图片
-          })
-        }
+      const markers = markersData?.map(marker => {
         return new (window as any).AMap.Marker({
           position: new (window as any).AMap.LngLat(marker.lng, marker.lat),
           title: marker.title || '',
           icon: require('leaflet/dist/images/marker-icon.png'),
         })
-      })
+      })    
+      
+      markersData && Promise.all(markersData.map(point => {
+        return new Promise((resolve, reject) => {
+          (window as any).AMap.convertFrom([116.3, 39.9], 'gps', function(status: any, result: any){
+            if(result.info === 'ok') {
+              const lnglats =  String(result.locations).split(",");
+              console.log(lnglats);
+              resolve(lnglats);
+              
+            } else {
+              reject(result.info);
+            }
+          })
+        })
+      })).then(values => {
+        values.forEach(value => {
+          markers && markers.push(
+            new (window as any).AMap.Marker({
+              position: (value as any).locations,
+              title: '转换后',
+              icon: png,
+            })
+          )
+        })
 
-      map.add(markers);
+        map.add(markers);
+      })
     }
   }, [markersData, map])
 
